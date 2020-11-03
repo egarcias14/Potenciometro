@@ -1,0 +1,42 @@
+int pot1 = A0; //Establece la entrada del pot en señal analoga
+int pot2 = A1;
+
+
+int val1;
+int val2;
+
+
+int r = 8;
+int g = 9;
+
+
+void setup() {
+  Serial.begin(9600);  //Establece comunicacion serial
+
+  pinMode(pot1,INPUT); //Se establece las entradas
+  pinMode(pot2,INPUT);
+
+  pinMode(r, OUTPUT);//Se establce las salidas
+  pinMode(g, OUTPUT);
+}
+
+void loop() {
+  
+  val1 = analogRead(pot1)/4; //Señal analoga en donde se colocara el puerto
+  val2 = analogRead(pot2)/4;
+
+
+  Serial.print(val1);
+  Serial.print("/");
+  Serial.print(val2);
+  Serial.print("/");
+
+
+  analogWrite(r, val1);
+  analogWrite(g, val2);
+ 
+  
+  delay(0.01);
+
+  
+}
