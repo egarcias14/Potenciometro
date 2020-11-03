@@ -1,0 +1,52 @@
+import processing.serial.*;
+
+Serial puerto;
+
+float r;
+float g;
+float b;
+
+void setup() {
+
+  fullScreen();
+  //size(700, 500);
+  background(255);
+  
+  puerto = new Serial(this, Serial.list()[0], 9600); //Se coloca la comunicacion serial
+  puerto.bufferUntil('\n'); //El buffer establece el numero de Bytes antes de llamar al evento serial.
+}
+void serialEvent(Serial port) { //Aqui se reciben los datos si existen datos seriales en el buffer 
+
+  String inString = port.readStringUntil('\n'); //Devuelve los valores y si no hay devuelve nulo
+  if (inString != null) {
+    float[] value = float(split(inString, '/')); //Si el valor es nulo el color va a ir cambiando en el background
+    r = value[0];
+    g = value[1];
+    b = value[2];
+  }
+}
+void draw() {
+
+  background(r, g, b); //Se especifica los valores de los colores que cambiaran
+  rectMode(CORNER);
+  strokeWeight(6);
+  stroke(255,212,0);
+  fill(r, 0, 0);
+  rect(width/4.66, height-r, 100, 300); //La primer barra de la grafica en donde el tamaño ira variando entre 4.66
+  fill(0, g, 0);
+  rect(width/2.33, height-g, 100, 300);//La segunda barra de la grafica en donde el tamaño ira variando entre 2.33
+  fill(0, 0, b);
+  rect(width/1.55, height-b, 100, 300);//La segunda barra de la grafica en donde el tamaño ira variando entre 1.55
+  
+  fill(0); //Encabezado 
+  rectMode(CENTER);
+  rect(349,192,500,40);
+  rect(355,83,446,110);
+  fill(255);
+  textSize(20);
+  text("INGENIERIA BIOMEDICA",231,65);
+  text("AÑO 2020.....OH YEAH!!!! ",230,108);
+  text(r, 160, 200);
+  text(g, 310, 200);
+  text(b, 460, 200);
+}
